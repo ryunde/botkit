@@ -136,9 +136,9 @@ controller.hears(['who made you'],'direct_message,direct_mention,mention',functi
 
     controller.storage.users.get(message.user,function(err, user) {
         if (user && user.name) {
-            bot.reply(message,'I was made by' + user.name);
+            bot.reply(message,'I was made by Tünde');
         } else {
-            bot.reply(message,'I don\'t know yet!');
+            bot.reply(message,'I was made by Tünde');
         }
     });
 });
