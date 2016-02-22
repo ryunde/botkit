@@ -122,7 +122,9 @@ controller.hears(['call me (.*)'],'direct_message,direct_mention,mention',functi
 });
 
 controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(bot, message) {
+		if (message.length === 9) {
 			bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
+		}
 });
 
 controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
@@ -138,7 +140,7 @@ controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',func
 			while (fib02 <= number);
 			
 			if (fib02 === number) { 
-				bot.reply (message, 'This message is a Fibonacci number');
+				bot.reply (message, 'This number is a Fibonacci number');
 				}
 			else {
 				bot.reply (message, 'This is not a Fibonacci number');
