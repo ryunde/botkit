@@ -131,7 +131,6 @@ controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',func
 
             var number = message.match[1];
 			bot.reply(message, number);
-			bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
 			/*var fib01 = 0;
 			var fib02 = 2;
 			do {
@@ -147,7 +146,6 @@ controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',func
 			else {
 				bot.reply (message, 'This is not a Fibonacci number');
 				}*/
-		}
 });
 
 controller.hears(['fibonacci '],'direct_message,direct_mention,mention',function(bot, message) {
