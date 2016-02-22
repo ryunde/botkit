@@ -125,7 +125,7 @@ controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(
 		if (message.length === 10) {
             bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
 		} else {
-			var number = parseInt(message.slice(10:));
+			var number = parseInt(message.slice(10));
 			var fib01 = 0;
 			var fib02 = 2;
 			do {
