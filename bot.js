@@ -73,7 +73,7 @@ if (!process.env.token) {
 
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
-var prime = parseInt("2", "3", "5", "7", "11", "13", "17", "19", "23")
+var prime = parseInt("2", "3", "5", "7", "11", "13", "17", "19", "23");
 
 var controller = Botkit.slackbot({
     debug: true,
@@ -156,10 +156,17 @@ controller.hears(['prime'],'direct_message,direct_mention,mention',function(bot,
     });
 });
 
-controller.hears('prime (.*)',['direct_message','mention'],function(bot,message) {
-  var number = message.match; //match[1] is the (.*) group. match[0] is the entire group (open the (.*) doors).
-  if (prime === number) {
-    return bot.reply(message, 'I\'m sorry, Dave. I\'m afraid I can\'t do that.');
+controller.hears('(.*) prime',['direct_message','mention'],function(bot,message) {
+  var number = message.match;
+  if (number === if (num !== 2) {
+            if (num % 2 == 0) {
+                result = false;
+            } else {
+                for (x=3; x<=Math.sqrt(num); x+=2) {
+                    if (num % x == 0) result = false;
+                }
+            }) {
+    return bot.reply(message, 'totanoin');
   }
   return bot.reply(message, 'Okay');
 });
