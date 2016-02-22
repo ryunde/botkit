@@ -132,6 +132,17 @@ controller.hears(['what is my name','who am i'],'direct_message,direct_mention,m
     });
 });
 
+controller.hears(['Who made you','Who created you'],'direct_message,direct_mention,mention',function(bot, message) {
+
+    controller.storage.users.get(message.user,function(err, user) {
+        if (user && user.name) {
+            bot.reply(message,'Polina is my master');
+        } else {
+            bot.reply(message,'I don\'t know yet!');
+        }
+    });
+});
+
 
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
 
