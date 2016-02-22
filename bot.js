@@ -73,7 +73,6 @@ if (!process.env.token) {
 
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
-var prime = parseInt("2", "3", "5", "7", "11", "13", "17", "19", "23");
 
 var controller = Botkit.slackbot({
     debug: true,
@@ -156,19 +155,17 @@ controller.hears(['prime'],'direct_message,direct_mention,mention',function(bot,
     });
 });
 
-controller.hears('(.*) prime',['direct_message','mention'],function(bot,message) {
-  var number = message.match;
-  if (number === if (num !== 2) {
-            if (num % 2 == 0) {
-                result = false;
-            } else {
-                for (x=3; x<=Math.sqrt(num); x+=2) {
-                    if (num % x == 0) result = false;
-                }
-            }) {
-    return bot.reply(message, 'totanoin');
-  }
-  return bot.reply(message, 'Okay');
+controller.hears(['paska (.*)'],'direct_message,mention',function(bot,message) {
+  var num = message.match[1];
+if (isPrime(num)==true) {
+	
+
+	bot.reply(message,'on alkuluku');
+	findPrimes(num, 10);
+}
+    
+  
+  
 });
 
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
@@ -223,4 +220,44 @@ function formatUptime(uptime) {
 
     uptime = uptime + ' ' + unit;
     return uptime;
+}
+
+function isPrime(number) {
+    var start = 2;
+    while (start <= Math.sqrt(number)) {
+        if (number % start++ < 1) return false;
+    }
+    return number > 1;
+}
+
+function findPrimes(lowerLimit, upperLimit) {
+
+    var primes = []; // will become a list of prime numbers
+
+    if (lowerLimit === 2) {
+        primes.push(2);
+    }
+
+    if (lowerLimit % 2 === 0) {
+        lowerLimit++;
+    }
+
+    primes_loop: for (var n = lowerLimit; n < upperLimit; n = n + 2) {
+
+        for (var i = 2; i < n; i++) {
+
+            if (n % i === 0) {
+                break primes_loop; // n is not prime if condtion is ture
+            }
+
+        }
+
+        primes.push(n); // update prime list with the prime number
+
+    }
+
+    for (var index = 0; index < primes.length; index++) {
+        alert(primes[index]);
+    }
+
 }
