@@ -129,7 +129,7 @@ controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',func
 
             var number = message.match[1];
 			var fib01 = 0;
-			var fib02 = 2;
+			var fib02 = 1;
 			do {
 				var save_fib01 = fib01;
 				fib01 = fib02;
