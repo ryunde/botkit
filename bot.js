@@ -122,7 +122,7 @@ controller.hears(['call me (.*)'],'direct_message,direct_mention,mention',functi
 });
 
 controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(bot, message) {
-		if (message.length === 9) {
+		if (message.text.length === 9) {
 			bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
 		}
 });
@@ -130,21 +130,12 @@ controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(
 controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
 
             var number = message.match[1];
-			var fib01 = 0;
-			var fib02 = 1;
-			do {
-				var save_fib01 = fib01;
-				fib01 = fib02;
-				fib02 = save_fib01+fib02;
-			} 
-			while (fib02 <= number);
+			if (isFib(number)) {
+				bot.reply(message, 'Yes!');
+			} else {
+				bot.reply(message, 'No!');
+			}
 			
-			if (fib02 === number) { 
-				bot.reply (message, 'This number is a Fibonacci number');
-				}
-			else {
-				bot.reply (message, 'This is not a Fibonacci number');
-				}
 });
 
 controller.hears(['what is my name','who am i'],'direct_message,direct_mention,mention',function(bot, message) {
@@ -198,6 +189,17 @@ controller.hears(['uptime','identify yourself','who are you','what is your name'
     bot.reply(message,':robot_face: I am a bot named <@' + bot.identity.name + '>. I have been running for ' + uptime + ' on ' + hostname + '.');
 
 });
+
+function isFib(val){
+	var prev = 0;
+		var curr = 1;
+			while(prev<=val){
+				if(prev == val){
+					return True;
+				   }
+				   curr = prev + curr;
+				   prev = curr - prev;
+				 } 
 
 function formatUptime(uptime) {
     var unit = 'second';
