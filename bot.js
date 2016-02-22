@@ -143,26 +143,30 @@ controller.hears(['who made you'],'direct_message,direct_mention,mention',functi
     });
 });
 
-
 controller.hears(['prime'],'direct_message,direct_mention,mention',function(bot, message) {
 
     controller.storage.users.get(message.user,function(err, user) {
         if (user && user.name) {
-            bot.reply(message,'2, 3, 5, 7, 11, 13, 17, 19, 23');
+            bot.reply(message,'first 10 prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23');
         } else {
-            bot.reply(message,'2, 3, 5, 7, 11, 13, 17, 19, 23');
+            bot.reply(message,'first 10 prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, 23');
         }
     });
 });
 
-controller.hears(['paska (.*)'],'direct_message,mention',function(bot,message) {
-  var num = message.match[1];
-if (isPrime(num)==true) {
-	
-
-	bot.reply(message,'on alkuluku');
-	findPrimes(num, 10);
-}
+controller.hears(['prime (.*)'],'direct_message,mention',function(bot,message) {
+		var num = message.match[1];
+		if (isPrime(num)==true) {
+			var i = 0;
+			var s = "";
+			for (i=0; i<10; i++){
+				num=findnextPrime(num);
+				s = s+ ', ' + num;
+			}
+		bot.reply(message,'your number is a prime number, the following 10 prime numbers are' + s);
+		} else {
+			bot.reply(message, 'your number is not a prime number');
+		}
     
   
   
@@ -230,34 +234,10 @@ function isPrime(number) {
     return number > 1;
 }
 
-function findPrimes(lowerLimit, upperLimit) {
+function findnextPrime(lowerLimit) {
+		
+		for (lowerLimit++; !isPrime(lowerLimit);lowerLimit++) 
+			;
+		return lowerLimit;
+	}
 
-    var primes = []; // will become a list of prime numbers
-
-    if (lowerLimit === 2) {
-        primes.push(2);
-    }
-
-    if (lowerLimit % 2 === 0) {
-        lowerLimit++;
-    }
-
-    primes_loop: for (var n = lowerLimit; n < upperLimit; n = n + 2) {
-
-        for (var i = 2; i < n; i++) {
-
-            if (n % i === 0) {
-                break primes_loop; // n is not prime if condtion is ture
-            }
-
-        }
-
-        primes.push(n); // update prime list with the prime number
-
-    }
-
-    for (var index = 0; index < primes.length; index++) {
-        alert(primes[index]);
-    }
-
-}
