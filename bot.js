@@ -121,6 +121,38 @@ controller.hears(['call me (.*)'],'direct_message,direct_mention,mention',functi
     });
 });
 
+controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(bot, message) {
+		if (message.length === 10) {
+            bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
+		} else {
+			var number = parseInt(message[10:]);
+			var fib01 = 0;
+			var fib02 = 2;
+			do {
+				var save_fib01 = fib01;
+				fib01 = fib02;
+				fib02 = save_fib01+fib02;
+			} 
+			while (fib02 <= number);
+			
+			if (fib02 === number) { 
+				bot.reply (message, 'This message is a Fibonacci number');
+				}
+			else {
+				bot.reply (message, 'This is not a Fibonacci number');
+				}
+		}
+});
+
+controller.hears(['fibonacci '],'direct_message,direct_mention,mention',function(bot, message) {
+
+            bot.reply(message,'First ten Fibonacci numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.');
+	
+});
+
+
+
+
 controller.hears(['what is my name','who am i'],'direct_message,direct_mention,mention',function(bot, message) {
 
     controller.storage.users.get(message.user,function(err, user) {
