@@ -130,7 +130,7 @@ controller.hears(['fibonacci'],'direct_message,direct_mention,mention',function(
 controller.hears(['fibonacci (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
 
             var number = message.match[1];
-			if (isFib(number)) {
+			if (isFib(number)===1) {
 				bot.reply(message, 'Yes!');
 			} else {
 				bot.reply(message, 'No!');
@@ -195,11 +195,12 @@ function isFib(val){
 		var curr = 1;
 			while(prev<=val){
 				if(prev == val){
-					return True;
+					return 1;
 				   }
 				   curr = prev + curr;
 				   prev = curr - prev;
-				 } 
+				 }
+} 
 
 function formatUptime(uptime) {
     var unit = 'second';
