@@ -44,6 +44,11 @@ var weather = require('./weather/lib/weather.js');
 var MathHelper = require('./botmath.js');
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
+<<<<<<< HEAD
+=======
+var botmath = require('./botmath.js');
+
+>>>>>>> origin/test
 var controller = Botkit.slackbot({
     debug: true,
 });
@@ -197,6 +202,7 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
+<<<<<<< HEAD
 controller.hears('prime', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
     if (message.text === "prime") {
         return bot.reply(message, '2, 3, 5, 7, 11, 13, 17, 19, 23, 29');
@@ -238,3 +244,16 @@ controller.hears(['How is the weather in (.*)'], 'direct_message,mention', funct
         
     });
 });
+=======
+
+controller.hears('what is (.*) \\+ (.*)',['direct_message', 'direct_mention', 'mention'],function(bot,message) {
+
+	var num1 = message.match[1];
+	var num2 = message.match[2];
+		
+	if (num1 != null && num2 != null) {
+		return bot.reply(message, num1 + ' + ' + num2 + ' = ' + botmath.sum(num1, num2));
+	}
+});
+
+>>>>>>> origin/test
