@@ -1,24 +1,3 @@
- Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Gist
-
-    @segeila
-
-2
-1
-
-    233
-
-juhovan/botkit forked from howdyai/botkit
-Code Pull requests 2 Pulse Graphs
-botkit/bot.js
-76e4ff5 an hour ago
-@juhovan juhovan Merge branch 'master' of github:/juhovan/botkit
-@benbrown @juhovan @Kasperki @MiguelSR @anonrig
-executable file 254 lines (186 sloc) 6.77 KB
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ______ ______ ______ __ __ __ ______
 /\ == \ /\ __ \ /\__ _\ /\ \/ / /\ \ /\__ _\
@@ -58,8 +37,8 @@ Read all about it here:
 -> http://howdy.ai/botkit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 if (!process.env.token) {
-console.log('Error: Specify token in environment');
-process.exit(1);
+	console.log('Error: Specify token in environment');
+	process.exit(1);
 }
 var MathHelper = require('./botmath.js');
 var Botkit = require('./lib/Botkit.js');
@@ -71,153 +50,175 @@ var bot = controller.spawn({
 token: process.env.token
 }).startRTM();
 controller.hears(['hello','hi'],'direct_message,direct_mention,mention',function(bot, message) {
-bot.api.reactions.add({
+	bot.api.reactions.add({
 timestamp: message.ts,
 channel: message.channel,
 name: 'robot_face',
-},function(err, res) {
-if (err) {
-bot.botkit.log('Failed to add emoji reaction :(',err);
-}
-});
-controller.storage.users.get(message.user,function(err, user) {
-if (user && user.name) {
-bot.reply(message,'Hello ' + user.name + '!!');
-} else {
-bot.reply(message,'Hello.');
-}
-});
+	},function(err, res) {
+		if (err) {
+			bot.botkit.log('Failed to add emoji reaction :(',err);
+		}
+	});
+	controller.storage.users.get(message.user,function(err, user) {
+		if (user && user.name) {
+			bot.reply(message,'Hello ' + user.name + '!!');
+		} else {
+			bot.reply(message,'Hello.');
+		}
+	});
 });
 controller.hears(['call me (.*)'],'direct_message,direct_mention,mention',function(bot, message) {
-var matches = message.text.match(/call me (.*)/i);
-var name = matches[1];
-controller.storage.users.get(message.user,function(err, user) {
-if (!user) {
-user = {
+	var matches = message.text.match(/call me (.*)/i);
+	var name = matches[1];
+	controller.storage.users.get(message.user,function(err, user) {
+		if (!user) {
+			user = {
 id: message.user,
-};
-}
-user.name = name;
-controller.storage.users.save(user,function(err, id) {
-bot.reply(message,'Got it. I will call you ' + user.name + ' from now on.');
-});
-});
+			};
+		}
+		user.name = name;
+		controller.storage.users.save(user,function(err, id) {
+			bot.reply(message,'Got it. I will call you ' + user.name + ' from now on.');
+		});
+	});
 });
 controller.hears(['what is my name','who am i'],'direct_message,direct_mention,mention',function(bot, message) {
-controller.storage.users.get(message.user,function(err, user) {
-if (user && user.name) {
-bot.reply(message,'Your name is ' + user.name);
-} else {
-bot.reply(message,'I don\'t know yet!');
-}
-});
+	controller.storage.users.get(message.user,function(err, user) {
+		if (user && user.name) {
+			bot.reply(message,'Your name is ' + user.name);
+		} else {
+			bot.reply(message,'I don\'t know yet!');
+		}
+	});
 });
 controller.hears(['shutdown'],'direct_message,direct_mention,mention',function(bot, message) {
-bot.startConversation(message,function(err, convo) {
-convo.ask('Are you sure you want me to shutdown?',[
-{
+	bot.startConversation(message,function(err, convo) {
+		convo.ask('Are you sure you want me to shutdown?',[
+		{
 pattern: bot.utterances.yes,
 callback: function(response, convo) {
-convo.say('Bye!');
-convo.next();
-setTimeout(function() {
-process.exit();
-},3000);
-}
-},
-{
+				convo.say('Bye!');
+				convo.next();
+				setTimeout(function() {
+					process.exit();
+				},3000);
+			}
+		},
+		{
 pattern: bot.utterances.no,
-default: true,
+		default: true,
 callback: function(response, convo) {
-convo.say('*Phew!*');
-convo.next();
-}
-}
-]);
-});
+				convo.say('*Phew!*');
+				convo.next();
+			}
+		}
+		]);
+	});
 });
 controller.hears(['uptime','identify yourself','who are you','what is your name'],'direct_message,direct_mention,mention',function(bot, message) {
-var hostname = os.hostname();
-var uptime = formatUptime(process.uptime());
-bot.reply(message,':robot_face: I am a bot named <@' + bot.identity.name + '>. I have been running for ' + uptime + ' on ' + hostname + '.');
+	var hostname = os.hostname();
+	var uptime = formatUptime(process.uptime());
+	bot.reply(message,':robot_face: I am a bot named <@' + bot.identity.name + '>. I have been running for ' + uptime + ' on ' + hostname + '.');
 });
 controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', function(bot, message) {
-if (message.text === 'fibonacci') {
-bot.reply(message, '1, 1, 2, 3, 5, 8, 13, 21, 34, 55');
-}
+	if (message.text === 'fibonacci') {
+		bot.reply(message, '1, 1, 2, 3, 5');
+	}
 });
-controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention', function(bot, message) {
-var parameter = parseInt(message.match[1]);
-var fibonacci = calculateFibonacciUpto(parameter);
-if (fibonacci[fibonacci.length-1] !== parameter) {
-bot.reply(message, 'That is not a Fibonacci number!');
-}
-else {
-bot.reply(message, fibonacci.slice(fibonacci.length-10,fibonacci.length).join(', '));
-}
+
+/*controller.hears(['fibonacci ([0-9]+)'], 'direct_message,direct_mention,mention', function(bot, message) {
+	var parameter = parseInt(message.match[1]);
+	var fibonacci = calculateFibonacciDownto(parameter);
+	if (fibonacci[fibonacci.length - 5] !== parameter) {
+		bot.reply(message, 'That is not a Fibonacci number!');
+	}
+	else {
+		bot.reply(message, fibonacci.slice(fibonacci.length-5,fibonacci.length).join(', '));
+	}
 });
-function calculateFibonacciUpto(goal) {
-var fibonacci = [1, 1];
-while (fibonacci[fibonacci.length-1] < goal) {
-fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1]);
+function calculateFibonacciDownto(goal) {
+	var fibonacci = [1,1];
+	while (fibonacci[fibonacci.length-1] < 15) {
+		fibonacci.push(fibonacci[fibonacci.length-2] + fibonacci[fibonacci.length-1]);
+	}
+	return fibonacci;
+}*/
+
+controller.hears(['fibonacci (.*)'],'direct_message,mention',function(bot,message) {
+        var num = message.match[1];
+        if (isFibonacci(num)==1) {
+            var i = 0;
+            var s = "";
+            for (i=0; i<5; i++){
+                num=findnextFibonacci(num);
+                s = s+ ', ' + num;
+            }
+        bot.reply(message,'your number is a fibonacci number, the following 5 fibonacci numbers are' + s);
+        } else {
+            bot.reply(message, 'your number is not a fibonacci number');
+        }
+   
+ 
+ 
+});
+function isFibonacci(number) {
+    var prev = 0;
+    var curr = 1;
+    while(prev<=number){
+        if(prev == number){
+            return 1;
+            }
+        curr = prev + curr;
+        prev = curr - prev;
+        }
+    
+}function findnextFibonacci(lowerLimit) {
+        
+    for (lowerLimit++; !isFibonacci(lowerLimit);lowerLimit++)
+            ;
+    return lowerLimit;
 }
-return fibonacci;
-}
+
 function formatUptime(uptime) {
-var unit = 'second';
-if (uptime > 60) {
-uptime = uptime / 60;
-unit = 'minute';
-}
-if (uptime > 60) {
-uptime = uptime / 60;
-unit = 'hour';
-}
-if (uptime != 1) {
-unit = unit + 's';
-}
-uptime = uptime + ' ' + unit;
-return uptime;
+	var unit = 'second';
+	if (uptime > 60) {
+		uptime = uptime / 60;
+		unit = 'minute';
+	}
+	if (uptime > 60) {
+		uptime = uptime / 60;
+		unit = 'hour';
+	}
+	if (uptime != 1) {
+		unit = unit + 's';
+	}
+	uptime = uptime + ' ' + unit;
+	return uptime;
 }
 controller.hears('prime',['direct_message', 'direct_mention', 'mention'],function(bot,message) {
-if (message.text === "prime") {
-return bot.reply(message, '2, 3, 5, 7, 11, 13, 17, 19, 23, 29');
-}
+	if (message.text === "prime") {
+		return bot.reply(message, '2, 3, 5, 7, 11, 13, 17, 19, 23, 29');
+	}
 });
+
 controller.hears('prime (.*)',['direct_message', 'direct_mention', 'mention'],function(bot,message) {
-var parameter = parseInt(message.match[1]);
-if (MathHelper.isPrime(parameter)) {
-var primes = new Array();
-var number = parameter + 1;
-while (primes.length < 10) {
-if (MathHelper.isPrime(number)) {
-primes.push(number);
-}
-number++;
-}
-var reply = "";
-for (var i = 0; i < primes.length; i++) {
-reply += primes[i] + " ";
-}
-return bot.reply(message, reply);
-}
-else {
-return bot.reply(message, "your parameter: " + parameter + " is not Prime number");
-}
+	var parameter = parseInt(message.match[1]);
+	if (MathHelper.isPrime(parameter)) {
+		var primes = new Array();
+		var number = parameter - 1;
+		while (primes.length < 10) {
+			if (MathHelper.isPrime(number)) {
+				primes.push(number);
+			}
+			number--;
+		}
+		var reply = "";
+		for (var i = 0; i < primes.length; i++) {
+			reply += primes[i] + " ";
+		}
+		return bot.reply(message, reply);
+	}
+	else {
+		return bot.reply(message, "your parameter: " + parameter + " is not Prime number");
+	}
 });
-
-    Status
-    API
-    Training
-    Shop
-    Blog
-    About
-    Pricing
-
-    © 2016 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Contact
-    Help
-
