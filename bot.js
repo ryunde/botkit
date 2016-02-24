@@ -242,9 +242,15 @@ controller.hears('Pacman', ['direct_message', 'direct_mention', 'mention'], func
         request('http://www.speedrun.com/api_records.php?game=pmwr', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log(body)
-                
+
                 return bot.reply(message, "Speedrun score: " + body);
             }
         })
     }
+});
+
+controller.on('user_channel_join', function (bot, message) {
+
+    return bot.reply(message, "I am cool\nYou are cool\nI am a bot\nYou are not");
+
 });
