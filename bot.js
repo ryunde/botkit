@@ -41,14 +41,11 @@ if (!process.env.token) {
     process.exit(1);
 }
 var weather = require('./weather/lib/weather.js');
+var assert = require('assert');
 var MathHelper = require('./botmath.js');
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
-<<<<<<< HEAD
-=======
 var botmath = require('./botmath.js');
-
->>>>>>> origin/test
 var controller = Botkit.slackbot({
     debug: true,
 });
@@ -152,11 +149,11 @@ controller.hears(['fibonacci'], 'direct_message,direct_mention,mention', functio
 
 controller.hears(['fibonacci (.*)'], 'direct_message,mention', function (bot, message) {
     var num = message.match[1];
-    if (isFibonacci(num) == 1) {
+    if (MathHelper.isFibonacci(num) == 1) {
         var i = 0;
         var s = "";
         for (i = 0; i < 5; i++) {
-            num = findnextFibonacci(num);
+            num = MathHelper.findnextFibonacci(num);
             s = s + ', ' + num;
         }
         bot.reply(message, 'your number is a fibonacci number, the following 5 fibonacci numbers are' + s);
@@ -167,24 +164,6 @@ controller.hears(['fibonacci (.*)'], 'direct_message,mention', function (bot, me
 
 
 });
-function isFibonacci(number) {
-    var prev = 0;
-    var curr = 1;
-    while (prev <= number) {
-        if (prev == number) {
-            return 1;
-        }
-        curr = prev + curr;
-        prev = curr - prev;
-    }
-
-}
-function findnextFibonacci(lowerLimit) {
-
-    for (lowerLimit++; !isFibonacci(lowerLimit); lowerLimit++)
-        ;
-    return lowerLimit;
-}
 
 function formatUptime(uptime) {
     var unit = 'second';
@@ -202,7 +181,7 @@ function formatUptime(uptime) {
     uptime = uptime + ' ' + unit;
     return uptime;
 }
-<<<<<<< HEAD
+
 controller.hears('prime', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
     if (message.text === "prime") {
         return bot.reply(message, '2, 3, 5, 7, 11, 13, 17, 19, 23, 29');
@@ -234,26 +213,24 @@ controller.hears(['How is the weather in (.*)'], 'direct_message,mention', funct
     var city = message.match[1];
     weather.find({search: city, degreeType: 'C'}, function (err, result) {
         return bot.reply(message, 'The weather in ' + result[0]["location"]["name"] + " is " + result[0]["current"]["temperature"] + "C and it is " + result[0]["current"]["skytext"]);
-        
-        
+
+
         if (err)
             console.log(err);
 
         console.log(JSON.stringify(result, null, 2));
-        
-        
+
+
     });
 });
-=======
 
-controller.hears('what is (.*) \\+ (.*)',['direct_message', 'direct_mention', 'mention'],function(bot,message) {
 
-	var num1 = message.match[1];
-	var num2 = message.match[2];
-		
-	if (num1 != null && num2 != null) {
-		return bot.reply(message, num1 + ' + ' + num2 + ' = ' + botmath.sum(num1, num2));
-	}
+controller.hears('what is (.*) \\+ (.*)', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
+
+    var num1 = message.match[1];
+    var num2 = message.match[2];
+
+    if (num1 != null && num2 != null) {
+        return bot.reply(message, num1 + ' + ' + num2 + ' = ' + botmath.sum(num1, num2));
+    }
 });
-
->>>>>>> origin/test
