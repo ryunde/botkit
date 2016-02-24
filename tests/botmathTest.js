@@ -14,3 +14,31 @@ describe('botmath', function() {
 	});
   });
 });
+
+describe('botmath', function() {
+  describe('isFibonacci', function () {
+    it('should return 1 if number is fibonacci', function () {
+      assert.equal(1, bothmath.isFibonacci(144));
+      assert.equal(1, bothmath.isFibonacci(13));
+    })
+	it('should return NaN if value is string or not a fibonacci number', function () {
+		assert.ok(isNaN(bothmath.isFibonacci('a')));
+                assert.ok(isNaN(bothmath.isFibonacci(14)));
+                assert.ok(isNaN(bothmath.isFibonacci(-1)));
+	});
+  });
+});
+
+describe('botmath', function() {
+  describe('isPrime', function () {
+    it('should return true if number is prime', function () {
+      assert.equal(true, bothmath.isPrime(144));
+      assert.equal(true, bothmath.isPrime(13));
+    })
+	it('should return NaN if value is string or not a fibonacci number', function () {
+		assert.ok(isNaN(bothmath.isFibonacci('a')));
+                assert.ok(isNaN(bothmath.isFibonacci(14)));
+                assert.ok(isNaN(bothmath.isFibonacci(-1)));
+	});
+  });
+});
