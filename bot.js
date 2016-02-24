@@ -40,7 +40,7 @@ if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
-var weather = require('./weather/lib/weather.js');
+var weather = require('weather-js');
 var assert = require('assert');
 var MathHelper = require('./botmath.js');
 var Botkit = require('./lib/Botkit.js');
