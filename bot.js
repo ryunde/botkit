@@ -40,6 +40,7 @@ if (!process.env.token) {
     console.log('Error: Specify token in environment');
     process.exit(1);
 }
+
 var weather = require('weather-js');
 var assert = require('assert');
 var MathHelper = require('./botmath.js');
@@ -232,5 +233,18 @@ controller.hears('what is (.*) \\+ (.*)', ['direct_message', 'direct_mention', '
 
     if (num1 != null && num2 != null) {
         return bot.reply(message, num1 + ' + ' + num2 + ' = ' + botmath.sum(num1, num2));
+    }
+});
+
+controller.hears('Pacman', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
+    if (message.text === "Pacman") {
+        var request = require('request');
+        request('http://www.speedrun.com/api_records.php?game=pmwr', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log(body)
+                
+                return bot.reply(message, "Speedrun score: " + body);
+            }
+        })
     }
 });
