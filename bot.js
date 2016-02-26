@@ -236,7 +236,7 @@ controller.hears('what is (.*) \\+ (.*)', ['direct_message', 'direct_mention', '
     }
 });
 
-controller.hears('Pacman', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
+controller.hears('pacman', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
     if (message.text === "Pacman") {
         var request = require('request');
         request('http://www.speedrun.com/api_records.php?game=pmwr', function (error, response, body) {
@@ -261,7 +261,7 @@ controller.hears(['we need to talk'],['direct_message','direct_mention'],functio
   });
 
   bot.startPrivateConversation(message,function(err,dm) {
-    dm.say('What now?');
+    dm.say('What is it now?');
   });
 
 });
