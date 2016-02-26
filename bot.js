@@ -259,11 +259,7 @@ controller.hears(['we need to talk'], ['direct_message', 'direct_mention'], func
     bot.startConversation(message, function (err, convo) {
         convo.say('Uh oh.');
     });
-
-    bot.startPrivateConversation(message, function (err, dm) {
-        dm.say('What now?');
-    });
-
+    
   bot.startPrivateConversation(message,function(err,dm) {
     dm.say('What is it now?');
   });
