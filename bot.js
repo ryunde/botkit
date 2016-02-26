@@ -255,13 +255,19 @@ controller.on('user_channel_join', function (bot, message) {
 
 });
 
-controller.hears(['we need to talk'],['direct_message','direct_mention'],function(bot,message) {
-  bot.startConversation(message,function(err,convo) {
-    convo.say('Uh oh.');
-  });
+controller.hears(['we need to talk'], ['direct_message', 'direct_mention'], function (bot, message) {
+    bot.startConversation(message, function (err, convo) {
+        convo.say('Uh oh.');
+    });
 
-  bot.startPrivateConversation(message,function(err,dm) {
-    dm.say('What now?');
-  });
+    bot.startPrivateConversation(message, function (err, dm) {
+        dm.say('What now?');
+    });
 
+});
+
+controller.hears(':roll:', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
+    if (message.text === ":roll:") {
+        return bot.reply(message, ':roll: Never gonna give you up \n :roll: Never gonna let you down \n :roll: Never gonna run around and desert you \n :roll: Never gonna make you cry \n :roll: Never gonna say goodbye \n :roll: Never gonna tell a lie and hurt you!');
+    }
 });
