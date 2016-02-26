@@ -270,9 +270,6 @@ controller.hears(['we need to talk'], ['direct_message', 'direct_mention'], func
 
 });
 
-
-});
-
 controller.hears('help','direct_message,direct_mention',function(bot,message) {
   var reply_with_attachments = {
     'username': 'Rick Astley' ,
@@ -291,8 +288,6 @@ controller.hears('help','direct_message,direct_mention',function(bot,message) {
     }
 
   return bot.reply(message, reply_with_attachments);
-});
-
 });
 
 controller.hears(':roll:', ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
