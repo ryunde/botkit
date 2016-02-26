@@ -261,7 +261,7 @@ controller.hears(['we need to talk'],['direct_message','direct_mention'],functio
   });
 
   bot.startPrivateConversation(message,function(err,dm) {
-    dm.say('What now?');
+    dm.say('What is it now?');
   });
 
 });
