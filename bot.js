@@ -254,3 +254,14 @@ controller.on('user_channel_join', function (bot, message) {
     return bot.reply(message, "I am cool\nYou are cool\nI am a bot\nYou are not");
 
 });
+
+controller.hears(['we need to talk'],['direct_message','direct_mention'],function(bot,message) {
+  bot.startConversation(message,function(err,convo) {
+    convo.say('Uh oh.');
+  });
+
+  bot.startPrivateConversation(message,function(err,dm) {
+    dm.say('What now?');
+  });
+
+});
