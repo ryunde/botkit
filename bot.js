@@ -255,14 +255,42 @@ controller.on('user_channel_join', function (bot, message) {
 
 });
 
-controller.hears(['we need to talk'],['direct_message','direct_mention'],function(bot,message) {
-  bot.startConversation(message,function(err,convo) {
-    convo.say('Uh oh.');
-  });
+controller.hears(['we need to talk'], ['direct_message', 'direct_mention'], function (bot, message) {
+    bot.startConversation(message, function (err, convo) {
+        convo.say('Uh oh.');
+    });
+
+    bot.startPrivateConversation(message, function (err, dm) {
+        dm.say('What now?');
+    });
+
 
   bot.startPrivateConversation(message,function(err,dm) {
     dm.say('What is it now?');
   });
 
+});
+
+
+});
+
+controller.hears('help','direct_message,direct_mention',function(bot,message) {
+  var reply_with_attachments = {
+    'username': 'Rick Astley' ,
+    'text': 'Never gonna let you down',
+    'attachments': [
+      {
+        'fallback': '',
+        'title': 'Click me',
+        'text': 'Never gonna say goodbye',
+        'color': '#7CD197',
+        'image_url': 'http://dafk.net/what/rickroll.gif',
+        'title_link': 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      }
+    ],
+    'icon_url': 'http://moopz.com/assets_c/2012/05/astley-thumb-48x48-129621.jpg'
+    }
+
+  return bot.reply(message, reply_with_attachments);
 });
 
