@@ -265,3 +265,4 @@ controller.hears(['we need to talk'],['direct_message','direct_mention'],functio
   });
 
 });
+
